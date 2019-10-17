@@ -1,0 +1,1 @@
+console.log('Coustom-app.js loaded');

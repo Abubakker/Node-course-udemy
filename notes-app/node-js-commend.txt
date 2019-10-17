@@ -1,0 +1,7 @@
+1. node -v // Node js version
+2. npm -v // npm(Node Package Manager) version
+3. npm init // For check npm details then enter
+4. npm i validator // For npm install validator
+5. npm i chalk // For npm install chalk
+6. npm i nodemon // For npm install -g nodemon
+7. -e js,hbs // For hps save time server load
