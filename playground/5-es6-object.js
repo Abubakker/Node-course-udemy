@@ -37,8 +37,9 @@ const product = {
 //console.log(price);
 //console.log(rating);
 
-const transaction = (type, {lable, price}) => {
-    console.log(type, lable, price);
+const transaction = (type, {label, price = 0} = {}) => {
+    console.log(type, label, price);
 };
 
 transaction('Order', product);
+transaction('Order');

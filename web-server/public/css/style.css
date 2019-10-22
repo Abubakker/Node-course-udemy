@@ -6,3 +6,14 @@ h1 {
 .about-img {
     width: 200px;
 }
+input {
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+}
+button {
+    cursor: pointer;
+    border: 1px solid #AAA;
+    background: #AAA;
+    color: white;
+    padding: 8px 15px;
+}

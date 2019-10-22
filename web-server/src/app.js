@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');  // for path/rout
 const hbs = require('hbs');
 
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
+
 const app = express();
 
 // Define paths for express config
@@ -36,6 +39,9 @@ app.get('/help', (req, res) => {
         helpText: 'This is some helpful text.'
     });
 });
+app.get('/help/*', (req, res) => {
+    res.send('Help article not found.');
+});
 
 // app.com
 // app.com/about
@@ -64,9 +70,52 @@ app.get('/contact', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-    res.send({
-        forcast: 'It is comming',
-        location: 'Asia/Dhaka'
+    if (!req.query.address) {
+        return res.send({
+            error: 'Please provide an address like "?address=Asia/Dhaka"'
+        });
+    } else {
+        geocode(req.query.address, (error, {latitude, longitude, location} = {}) => {
+            if (error) {
+                return res.send({
+                    error: error
+                });
+            } else {
+                forecast(latitude, longitude, (error, forecastResponseData) => {
+                    if (error) {
+                        return res.send({error: error});
+                    }
+                    res.send({
+                        forcast: forecastResponseData,
+                        location,
+                        address: req.query.address
+                    });
+                });
+        }
+        });
+    }
+//    res.send({
+//        forcast: 'It is comming',
+//        location: 'Asia/Dhaka',
+//        address: req.query.address
+//    });
+});
+app.get('/product', (req, res) => {
+    if (!req.query.search) {
+        res.send({
+            result: 'Please provide a search get query.'
+        });
+    } else {
+
+        res.send({
+            product: req.query
+        });
+    }
+});
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: '404 page'
     });
 });
 

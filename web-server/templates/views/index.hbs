@@ -5,7 +5,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
-        <script src="js/custom-app.js"></script>
     </head>
     <body>
         <div>
@@ -13,5 +12,16 @@
             <h1>{{title}}</h1>
             <h1>Create by {{name}}</h1>
         </div>
+        <!--<form action="weather?">-->
+        <form action="">
+            <input placeholder="Location" name="address">
+            <button>Search</button>
+        </form>
+        <p id="message-1"></p>
+        <p id="message-2"></p>
+        <footer>
+            {{>footer}}
+        </footer>
+        <script src="js/custom-app.js"></script>
     </body>
 </html>
