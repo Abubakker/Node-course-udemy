@@ -1,10 +1,6 @@
-h1 {
-    font-size: 40px;
-    color: gray;
-}
-
-.about-img {
-    width: 200px;
+.nav-item.active .nav-link {
+    font-weight: 600;
+    color: #FFF;
 }
 input {
     border: 1px solid #ddd;
@@ -17,3 +13,4 @@ button {
     color: white;
     padding: 8px 15px;
 }
+

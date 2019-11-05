@@ -1,29 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{title}}</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <div>
-            {{>header}}
-            <!--<h1>{{title}}</h1>-->
-            <!--<h1>Create by {{name}}</h1>-->
-            <br>
-            <br>
+{{>header}}
+<section class="py-5 px-3">
+    <h2>Location</h2>
+    <!--<form action="weather?">-->
+    <form action="">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control required" placeholder="Asia/Dhaka" name="address" aria-required="true">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" name="subscribe" type="submit">Search</button>
+                        </div>
+                </div>
+            </div>
         </div>
-        <!--<form action="weather?">-->
-        <form action="">
-            <input placeholder="Location" name="address">
-            <button>Search</button>
-        </form>
-        <p id="message-1"></p>
-        <p id="message-2"></p>
-        <footer>
-            {{>footer}}
-        </footer>
-        <script src="js/custom-app.js"></script>
-    </body>
-</html>
+    </form>
+    <p class="text-danger error-msg"></p>
+    <p id="message-1"></p>
+    <div id="message-2"></div>
+</section>
+{{>footer}}

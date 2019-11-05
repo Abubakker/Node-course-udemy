@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{title}}</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/style.css">
-        <script src="js/custom-app.js"></script>
-    </head>
-    <body>
-        <div>
-            {{>header}}
-            <!--<h1>{{title}}</h1>-->
-            <p></p>
-            <p>This site Created by Abu bakker. It uses date from mapbox.com and darksky.net!</p>
-            <img src="/img/bakker.jpg" width="250">
-        </div>
-        <footer>
-            {{>footer}}
-        </footer>
-    </body>
-</html>
+{{>header}}
+<section class="py-5 px-3">
+    <p>It uses date from mapbox.com and darksky.net!</p>
+    <img src="/img/bakker.jpg" width="250">
+</section>
+{{>footer}}

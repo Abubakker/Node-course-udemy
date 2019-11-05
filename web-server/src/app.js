@@ -24,6 +24,7 @@ app.use(express.static(path.join(publicDirectoryPath))); // defult view
 app.get('/', (req, res) => {  // overright the url using "defult view"
     res.render('index', {
         title: 'Weather APP',
+        menu: 'index',
         name: 'Abu bakker'
     });
 });
@@ -35,9 +36,9 @@ app.get('/about', (req, res) => {
 });
 app.get('/help', (req, res) => {
     res.render('help', {
-        title: 'Welcome for help',
+        title: 'Welcome to help page',
         name: 'Abu bakker',
-        helpText: 'This is some helpful text.'
+        email: 'bakker311042@gmail.com'
     });
 });
 app.get('/help/*', (req, res) => {
@@ -66,14 +67,21 @@ app.get('/help/*', (req, res) => {
 //    res.send('<h1>About page</h1>');
 //});
 
+//app.get('/contact', (req, res) => {
+//    res.send('Contact page');
+//});
 app.get('/contact', (req, res) => {
-    res.send('Contact page');
+    res.render('contact', {
+        title: 'Welcome to contact page',
+        name: 'Abu bakker',
+        email: 'bakker311042@gmail.com'
+    });
 });
 
 app.get('/weather', (req, res) => {
     if (!req.query.address) {
         return res.send({
-            error: 'Please provide an address like "?address=Asia/Dhaka"'
+            error: 'Please provide an address like "Asia/Dhaka".'
         });
     } else {
         geocode(req.query.address, (error, {latitude, longitude, location} = {}) => {
