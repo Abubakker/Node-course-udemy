@@ -31,14 +31,28 @@
 //    console.log(data);
 //});
 
-const add = (a, b, callback) => {
+//const add = (a, b, callback) => {
+//    setTimeout(() => {
+//        return callback(a + b);
+////        const data = a + b;
+////        return callback(data);
+//    }, 2000);
+//};
+//add(2, 3, (sum) => {
+//
+//    console.log(sum);
+//});
+
+const doWorkCallback = (callback) => {
     setTimeout(() => {
-        return callback(a + b);
-//        const data = a + b;
-//        return callback(data);
+        //callback('User define error!', undefined);
+        callback(undefined, [1, 4, 7]);
     }, 2000);
 };
-add(2, 3, (sum) => {
 
-    console.log(sum);
+doWorkCallback((error, result) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log(result);
 });

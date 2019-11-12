@@ -5,3 +5,4 @@
 5. npm i chalk // For npm install chalk
 6. npm i nodemon // For npm install -g nodemon
 7. -e js,hbs // For hps save time server load
+8. /Users/ASUS/mongodb/bin/mongod.exe --dbpath=/Users/ASUS/mongodb-data // For DataBase connection, DataBase view app name Robo 3T
