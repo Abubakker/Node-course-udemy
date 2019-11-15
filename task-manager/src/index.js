@@ -54,6 +54,38 @@ app.get("/users/:id", async(req, res) => {
     }
 });
 
+app.patch('/users/:id', async (req, res) => {
+    const updates = Object.keys(req.body);
+    const alloweUpdates = ['name', 'email', 'password', 'age'];
+    const isValidOperation = updates.every((update) => alloweUpdates.includes(update));
+
+    if (!isValidOperation) {
+        res.status(400).send({error: 'Invalid updates!'});
+    }
+
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new : true, runVaidators: true});
+        if (!user) {
+            return res.status(404).send("Update faild");
+        }
+        res.send(user);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+app.delete('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        if (!user) {
+            return res.status(404).send("Delete faild");
+        }
+        res.send(user);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 app.post('/tasks', async(req, res) => {
     const task = new Task(req.body); // Creating instance from input json
     try {
@@ -86,6 +118,37 @@ app.get("/tasks/:id", async(req, res) => {
     }
 });
 
+app.patch('/tasks/:id', async (req, res) => {
+    const updates = Object.keys(req.body);
+    const alloweUpdates = ['description', 'completed'];
+    const isValidOperation = updates.every((update) => alloweUpdates.includes(update));
+
+    if (!isValidOperation) {
+        res.status(400).send({error: 'Invalid updates!'});
+    }
+
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, {new : true, runVaidators: true});
+        if (!task) {
+            return res.status(404).send("Update faild");
+        }
+        res.send(task);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+app.delete('/tasks/:id', async (req, res) => {
+    try {
+        const tasks = await Task.findByIdAndDelete(req.params.id);
+        if (!tasks) {
+            return res.status(404).send("Delete faild");
+        }
+        res.send(tasks);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port + '.');
