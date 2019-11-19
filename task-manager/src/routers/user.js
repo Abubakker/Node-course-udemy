@@ -27,11 +27,21 @@ router.post('/users', async (req, res) => {
 //    });
 });
 
+router.post('/users/login', async (req, res) => {
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        res.send(user);
+    } catch (exception) {
+        res.status(400).send(exception);
+    }
+});
+
 router.get("/users", async (req, res) => {
     try {
         const users = await User.find({});
         res.send(users);
     } catch (error) {
+        throw new Error('Invalid user email.');
         res.status(500).send(error);
     }
 });
