@@ -59,7 +59,10 @@ router.patch('/users/:id', async (req, res) => {
     }
 
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new : true, runVaidators: true});
+        const user = await User.findById(req.params.id); // for call Middleware
+        updates.forEach((update) => user[update] = req.body[update]); // for call Middleware
+        await user.save(); // call Middleware
+        // const user = await User.findByIdAndUpdate(req.params.id, req.body, {new : true, runVaidators: true});
         if (!user) {
             return res.status(404).send("Update faild");
         }
