@@ -7,6 +7,28 @@ const port = process.env.PORT || 4001;
 const userRouter = require('./routers/user'); // Routing
 const taskRouter = require('./routers/task'); // Routing
 
+// Middleware
+
+//app.use((req, res, next) => {
+//    if (req.method === 'GET') {
+//        res.send('Get off')
+//    } else {
+//        next();
+//    }
+////    console.log(req.method, req.path);
+////    next();
+//});
+
+//app.use((req, res, next) => {
+//    res.status(503).send('The site is currently down. Check after 8:00 am!');
+////    if (req.method === 'GET') {
+////        res.status(503).send('Get method off');
+////    } else {
+////        next();
+////    }
+//});
+// Middleware
+
 app.use(express.json()); // Input field conver in a json
 app.use(userRouter); // Routing
 app.use(taskRouter); // Routing
