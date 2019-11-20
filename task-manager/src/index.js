@@ -15,15 +15,15 @@ app.listen(port, () => {
     console.log('Server is up on port ' + port + '.');
 });
 
-const jwt = require('jsonwebtoken');
-
-const myJwtFunction = async () => {
-    const token = jwt.sign({_id: 'bakker123'}, 'thisismynodejscourse', {expiresIn: '7 days'});
-    console.log(token);
-    const data = jwt.verify(token, 'thisismynodejscourse');
-    console.log(data);
-};
-myJwtFunction();
+//const jwt = require('jsonwebtoken');
+//
+//const myJwtFunction = async () => {
+//    const token = jwt.sign({_id: 'bakker123'}, 'thisismynodejscourse', {expiresIn: '7 days'});
+//    console.log(token);
+//    const data = jwt.verify(token, 'thisismynodejscourse');
+//    console.log(data);
+//};
+//myJwtFunction();
 
 //const bcrypt = require('bcryptjs');
 //const myFunction = async () => {
