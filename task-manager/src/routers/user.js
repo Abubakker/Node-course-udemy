@@ -10,21 +10,6 @@ router.post('/users', async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     }
-//    const user = new User({ // Creating instance
-//        name: '          Abu Bakker Siddique         ',
-//        password: 'bakker123',
-//        email: 'baKKer@siLiconOrchard.com         ',
-//        age: 28
-//    });
-
-//    const user = new User(req.body); // // Creating instance from input json
-//    user.save().then(() => { // Save into Database
-//        res.status(201).send(user);
-//    }).catch((error) => {
-//        res.status(400).send(error);
-////        res.status(400);
-////        res.send(error);
-//    });
 });
 
 router.post('/users/login', async (req, res) => {
