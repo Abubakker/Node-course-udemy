@@ -50,6 +50,15 @@ const userSchema = new mongoose.Schema({// model, collection name is 'User'
         }]
 });
 
+userSchema.methods.toJSON = function () {
+    const user = this;
+    const userObject = user.toObject();
+    delete userObject.password;
+    delete userObject.tokens;
+    userObject.test = 'test';
+    return userObject;
+};
+
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
     const token = jwt.sign({_id: user._id.toString()}, 'thisismynodejscourse', {expiresIn: '7 days'});
