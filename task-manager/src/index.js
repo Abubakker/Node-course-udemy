@@ -7,14 +7,14 @@ const port = process.env.PORT || 4001;
 const userRouter = require('./routers/user'); // Routing
 const taskRouter = require('./routers/task'); // Routing
 
-const multer = require('multer');
-const upload = multer({
-    dest: 'images'
-});
-
-app.post('/upload', upload.single('upload'), (req, res) => {
-    res.send();
-});
+//const multer = require('multer');
+//const upload = multer({
+//    dest: 'images'
+//});
+//
+//app.post('/upload', upload.single('upload'), (req, res) => {
+//    res.send();
+//});
 
 
 app.use(express.json()); // Input field conver in a json
