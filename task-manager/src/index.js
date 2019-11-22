@@ -7,14 +7,23 @@ const port = process.env.PORT || 4001;
 const userRouter = require('./routers/user'); // Routing
 const taskRouter = require('./routers/task'); // Routing
 
-//const multer = require('multer');
-//const upload = multer({
-//    dest: 'images'
-//});
-//
-//app.post('/upload', upload.single('upload'), (req, res) => {
-//    res.send();
-//});
+const multer = require('multer');
+const upload = multer({
+    dest: 'images',
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, callback) {
+        if (!file.originalname.match(/\.(doc|docx)$/)) {
+            return callback(new Error('Please upload a word'));
+        }
+        callback(undefined, true);
+    }
+});
+
+app.post('/upload', upload.single('upload'), (req, res) => {
+    res.send();
+});
 
 
 app.use(express.json()); // Input field conver in a json
