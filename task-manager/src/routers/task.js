@@ -17,10 +17,17 @@ router.post('/tasks', auth, async(req, res) => {
     }
 });
 
+// Get /task?completed=true|false
+// Get /task?limit=10&skip=10
 router.get("/tasks", auth, async(req, res) => {
     try {
         // const task = await Task.find({owner: req.user._id});
-        await req.user.populate('tasks').execPopulate(); // for table join
+        // await req.user.populate('tasks').execPopulate(); // for table join
+        const match = {};
+        if (req.query.completed) {
+            match.completed = req.query.completed === 'true'; // if completed == true then true otherwise false
+        }
+        await req.user.populate({path: 'tasks', match, options: {limit: parseInt(req.query.limit), skip: parseInt(req.query.skip)}}).execPopulate(); // for table join // these are same match or completed : req.query.completed
         res.send(req.user.tasks);
     } catch (error) {
         res.status(500).send(error);
