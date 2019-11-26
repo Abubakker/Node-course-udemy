@@ -142,10 +142,21 @@ router.delete('/users/me', auth, async (req, res) => { // User delete own
 });
 
 const upload = multer({
-    dest: 'profile-imgs'
+    dest: 'profile-imgs',
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, callback) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return callback(new Error('Please upload an image file (jpg or jpeg or png)'));
+        }
+        callback(undefined, true);
+    }
 });
 router.post('/users/me/profile-img', upload.single('profile'), (req, res) => {
     res.send();
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message});
 });
 
 module.exports = router;

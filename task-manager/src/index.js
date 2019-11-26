@@ -15,14 +15,19 @@ const upload = multer({
     },
     fileFilter(req, file, callback) {
         if (!file.originalname.match(/\.(doc|docx)$/)) {
-            return callback(new Error('Please upload a word'));
+            return callback(new Error('Please upload a word file'));
         }
         callback(undefined, true);
     }
 });
+const errorMiddleware = (req, res, next) => {
+    throw new Error('Test my middleware');
+};
 
 app.post('/upload', upload.single('upload'), (req, res) => {
     res.send();
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message});
 });
 
 
