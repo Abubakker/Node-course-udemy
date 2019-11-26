@@ -48,7 +48,10 @@ const userSchema = new mongoose.Schema({// model, collection name is 'User'
                 type: String,
                 required: true
             }
-        }]
+        }],
+    profile_img: {
+        type: Buffer
+    }
 }, {
     timestamps: true
 });

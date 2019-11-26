@@ -142,7 +142,7 @@ router.delete('/users/me', auth, async (req, res) => { // User delete own
 });
 
 const upload = multer({
-    dest: 'profile-imgs',
+//    dest: 'profile-imgs',
     limits: {
         fileSize: 1000000
     },
@@ -153,10 +153,18 @@ const upload = multer({
         callback(undefined, true);
     }
 });
-router.post('/users/me/profile-img', upload.single('profile'), (req, res) => {
+router.post('/users/me/profile-img', auth, upload.single('profile'), async (req, res) => {
+    req.user.profile_img = req.file.buffer;
+    await req.user.save();
     res.send();
 }, (error, req, res, next) => {
     res.status(400).send({error: error.message});
+});
+
+router.delete('/users/me/profile-img', auth, async (req, res) => {
+    req.user.profile_img = undefined;
+    await req.user.save();
+    res.send();
 });
 
 module.exports = router;
