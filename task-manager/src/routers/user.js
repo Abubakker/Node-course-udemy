@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const sharp = require('sharp');
 const User = require('../models/user');
 const auth = require('../middleware/auth');
 const router = new express.Router();
@@ -154,7 +155,9 @@ const upload = multer({
     }
 });
 router.post('/users/me/profile-img', auth, upload.single('profile'), async (req, res) => {
-    req.user.profile_img = req.file.buffer;
+    // req.user.profile_img = req.file.buffer;
+    const bufferImg = await sharp(req.file.buffer).resize({width: 250, height: 300}).png().toBuffer();
+    req.user.profile_imgs = bufferImg;
     await req.user.save();
     res.send();
 }, (error, req, res, next) => {
@@ -162,7 +165,7 @@ router.post('/users/me/profile-img', auth, upload.single('profile'), async (req,
 });
 
 router.delete('/users/me/profile-img', auth, async (req, res) => {
-    req.user.profile_img = undefined;
+    req.user.profile_imgs = undefined;
     await req.user.save();
     res.send();
 });
@@ -170,11 +173,11 @@ router.delete('/users/me/profile-img', auth, async (req, res) => {
 router.get('/users/:id/profile-img', async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        if (!user || !user.profile_img) {
+        if (!user || !user.profile_imgs) {
             throw new Error();
         }
-        res.set('Content-Type', 'image/jpg');
-        res.send(user.profile_img);
+        res.set('Content-Type', 'image/png');
+        res.send(user.profile_imgs);
     } catch (exception) {
         res.status(404).send();
     }
