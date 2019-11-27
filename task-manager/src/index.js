@@ -4,7 +4,7 @@ const userRouter = require('./routers/user'); // Routing
 const taskRouter = require('./routers/task'); // Routing
 
 const app = express();
-const port = process.env.PORT || 4001;
+const port = process.env.PORT || 4002;
 
 app.use(express.json()); // Input field conver in a json
 app.use(userRouter); // Routing
