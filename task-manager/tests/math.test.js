@@ -36,13 +36,13 @@ test('Should add two numbers', (done) => {
     add(12, 34).then((sum) => {
         expect(sum).toBe(46);
         done();
-    })
+    });
 });
 
 test('Should add two numbers async/await', async() => {
     const sum = await add(12, 13).then((sum) => {
         expect(sum).toBe(25);
-    })
+    });
 });
 
 //test('Hello tester!', () => {
