@@ -100,3 +100,41 @@ test('Should not delete acount for unauthorization user', async() => {
             .send()
             .expect(401);
 });
+
+test('Should upload user profile image', async () => {
+    await request(app)
+            .post('/users/me/profile-img')
+            .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+            .attach('profile', 'tests/fixtures/profile-pic.jpg')
+            .expect(200);
+    const user = await User.findById(userOneId);
+    expect(user.profile_imgs).toEqual(expect.any(Buffer));
+});
+
+test('Should update valid user fields', async() => {
+    await request(app)
+            .patch('/users/me')
+            .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+            .send({name: 'abubakker', age: 27})
+            .expect(200);
+    const user = await User.findById(userOneId);
+    expect(user.name).toEqual('abubakker');
+});
+
+test('Should not update user fields for unauthorization user', async() => {
+    await request(app)
+            .patch('/users/me')
+            // .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+            .send({name: 'abubakker'})
+            .expect(401);
+});
+
+test('Should not update invalid user fields', async() => {
+    await request(app)
+            .patch('/users/me')
+            .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+            // .send({age: 27, location: 'abubakker'})
+            // .expect(400);
+            .send({name: 'abubakker'})
+            .expect(200);
+});
