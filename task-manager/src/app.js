@@ -11,7 +11,7 @@ app.use(userRouter); // Routing
 app.use(taskRouter); // Routing
 
 
-module.exports = app
+module.exports = app;
 
 //app.listen(port, () => {
 //    console.log('Server is up on port ' + port + '.');
