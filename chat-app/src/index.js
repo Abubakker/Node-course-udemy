@@ -1,0 +1,74 @@
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketio = require('socket.io');
+const Filter = require('bad-words');
+const {generateMessage, generateLocation} = require('./utils/messages');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
+
+const port = process.env.PORT || 4000;
+// Define paths for express config
+const publicDirectoryPath = path.join(__dirname, '../public');
+
+// Setup static directory to serve
+app.use(express.static(publicDirectoryPath)); // defult view
+
+app.get('/', function (req, res) {
+    res.send('Hello World');
+});
+
+//let count = 0;
+
+io.on('connection', (socket) => {
+    console.log('New WebSocket connection');
+
+    // Message show defult
+    socket.emit('message', generateMessage('Welcome!'));
+
+    // Message show when join any user
+    socket.broadcast.emit('message', generateMessage('A new user has joined!'));
+
+    // Acknowledgement process
+    // Message show from form submit
+    socket.on('sendMessage', (msg, callback) => {
+        // Form validateion
+        const filter = new Filter();
+        if (filter.isProfane(msg)) {
+            return callback('Profanity is not allowed!')
+        }
+        io.emit('message', generateMessage(msg));
+//        callback('Delivered')
+        callback()
+    });
+    // Normal process
+    // Message show from form submit
+    //socket.on('sendMessage', (msg) => {
+    //    io.emit('message', msg);
+    //});
+
+    // Get Geolocation
+    socket.on('sendLocation', (coords, callback) => {
+        // io.emit('message', `Location:: lat:${coords.latitude}, long:${coords.longitude}`);
+        io.emit('locationMessage', generateLocation(`https://www.google.com/maps?d=${coords.latitude},${coords.longitude}`));
+        callback()
+    });
+
+    // Message show when disconnect any user
+    socket.on('disconnect', () => {
+        io.emit('message', generateMessage('A User has left!'));
+    });
+
+//    socket.emit('countUpdated', count);
+//    socket.on('increment', () => {
+//        count++;
+//        // socket.emit('countUpdated', count);
+//         io.emit('countUpdated', count);
+//    });
+});
+
+server.listen(port, () => { // callback function
+    console.log(`server is up on port ${port}!`);
+});

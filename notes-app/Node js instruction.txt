@@ -1,0 +1,67 @@
+1. Create an express web server
+    Installing:
+        i) Initialize npm: ($ npm init) with default result:[Create package.json file]
+        ii) Install Express: ($ npm install express :: npm i express) with default if need any version like as (npm i express@4.16.4) result:[Create package-lock.json with node_modules file]
+            Server up the public directory
+            listen on port 3000
+            Create index.html and render "Chat App" to the screen
+
+                const path = require('path')
+                const express = require('express')
+                const app = express()
+
+                app.get('/', function (req, res) {
+                  res.send('Hello World')
+                })
+
+                app.listen(3000) // port 
+
+                or
+
+                const path = require('path');
+                const express = require('express');
+
+                const app = express();
+
+                const port = process.env.PORT || 3000;
+                // Define paths for express config
+                const publicDirectoryPath = path.join(__dirname, '../public');
+
+                // Setup static directory to serve
+                app.use(express.static(publicDirectoryPath)); // defult view
+
+                app.listen(port, () => { // callback function
+                    console.log(`server is up on port ${port}!`);
+                });
+            
+        
+        iii) Start then server and view the page in the browser
+            (localhost:3000)
+
+2. Setup scripts package.json
+    i) Create a "start" script to start the app using node
+    ii) Install nodemon and a development dependency
+    iii) Create a "dev" script to start the app using nodemon
+        Remove test from package ::
+            "scripts": {
+                // "test": "echo \"Error: no test specified\" && exit 1"
+              },
+        Add :: 
+            "scripts": {
+                "start":"node src/index.js",
+                "dev": "nodemon src/index.js "
+              },
+
+        Install Express npm nodemon: (npm i nodemon) default, (npm i nodemon --save-dev) for development dependency, (npm i nodemon -g) for globally
+        Run from top: (npm i nodemon --save-dev)
+        Result :: on package.json
+          "devDependencies": {
+            "nodemon": "^2.0.3"
+          }
+
+    iv) Run both script for test (npm run start)
+        (npm run dev) for development
+
+    
+
+    
