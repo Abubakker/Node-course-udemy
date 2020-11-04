@@ -25,11 +25,18 @@ app.get('/', function (req, res) {
 io.on('connection', (socket) => {
     console.log('New WebSocket connection');
 
-    // Message show defult
-    socket.emit('message', generateMessage('Welcome!'));
+    socket.on('join', ({username, room}) => {
+        socket.join(room);
 
-    // Message show when join any user
-    socket.broadcast.emit('message', generateMessage('A new user has joined!'));
+        // Message show defult
+        socket.emit('message', generateMessage('Welcome!'));
+        // Message show when join any user
+        socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined!`));
+
+
+        // socket.emit, io.emit, socket.broadcast.emit
+        // io.to.emit, socket.broadcast.to.emit // to use for room
+    });
 
     // Acknowledgement process
     // Message show from form submit
@@ -39,7 +46,7 @@ io.on('connection', (socket) => {
         if (filter.isProfane(msg)) {
             return callback('Profanity is not allowed!')
         }
-        io.emit('message', generateMessage(msg));
+        io.to('First room').emit('message', generateMessage(msg));
 //        callback('Delivered')
         callback()
     });
