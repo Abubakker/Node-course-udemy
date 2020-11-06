@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
         }
         io.to(user.room).emit('message', generateMessage(user.username, msg));
 //        callback('Delivered')
-        callback()
+        callback();
     });
     // Normal process
     // Message show from form submit
