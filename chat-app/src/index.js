@@ -36,11 +36,11 @@ io.on('connection', (socket) => {
         socket.join(user.room);
 
         // Message show defult
-        socket.emit('message', generateMessage('Welcome!'));
+        socket.emit('message', generateMessage('Admin', 'Welcome!'));
         // Message show when join any user
         socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined!`));
 
-//        callback()
+        callback()
         // socket.emit, io.emit, socket.broadcast.emit
         // io.to.emit, socket.broadcast.to.emit // to use for room
     });
@@ -48,12 +48,13 @@ io.on('connection', (socket) => {
     // Acknowledgement process
     // Message show from form submit
     socket.on('sendMessage', (msg, callback) => {
+        const user = getUser(socket.id);
         // Form validateion
         const filter = new Filter();
         if (filter.isProfane(msg)) {
             return callback('Profanity is not allowed!')
         }
-        io.to('First room').emit('message', generateMessage(msg));
+        io.to(user.room).emit('message', generateMessage(user.username, msg));
 //        callback('Delivered')
         callback()
     });
@@ -65,8 +66,9 @@ io.on('connection', (socket) => {
 
     // Get Geolocation
     socket.on('sendLocation', (coords, callback) => {
+        const user = getUser(socket.id);
         // io.emit('message', `Location:: lat:${coords.latitude}, long:${coords.longitude}`);
-        io.emit('locationMessage', generateLocation(`https://www.google.com/maps?d=${coords.latitude},${coords.longitude}`));
+        io.to(user.room).emit('locationMessage', generateLocation(user.username, `https://www.google.com/maps?d=${coords.latitude},${coords.longitude}`));
         callback()
     });
 
@@ -75,7 +77,7 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id)
 
         if (user) {
-            io.to(user.room).emit('message', generateMessage(`${user.username} has left!`));
+            io.to(user.room).emit('message', generateMessage('Admin', `${user.username} has left!`));
         }
 
     });
