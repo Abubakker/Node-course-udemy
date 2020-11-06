@@ -40,6 +40,11 @@ io.on('connection', (socket) => {
         // Message show when join any user
         socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined!`));
 
+        // for room users info
+        io.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom(user.room)
+        });
         callback()
         // socket.emit, io.emit, socket.broadcast.emit
         // io.to.emit, socket.broadcast.to.emit // to use for room
@@ -78,6 +83,11 @@ io.on('connection', (socket) => {
 
         if (user) {
             io.to(user.room).emit('message', generateMessage('Admin', `${user.username} has left!`));
+            // for room users info
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUsersInRoom(user.room)
+            });
         }
 
     });

@@ -40,21 +40,21 @@ const removeUser = (id) => {
     }
 }
 
-addUser({
-    id: 01,
-    username: 'abu',
-    room: 'general'
-});
-addUser({
-    id: 02,
-    username: 'abu2',
-    room: 'general'
-});
-addUser({
-    id: 03,
-    username: 'abu3',
-    room: 'general1'
-});
+//addUser({
+//    id: 01,
+//    username: 'abu',
+//    room: 'general'
+//});
+//addUser({
+//    id: 02,
+//    username: 'abu2',
+//    room: 'general'
+//});
+//addUser({
+//    id: 03,
+//    username: 'abu3',
+//    room: 'general1'
+//});
 
 const getUser = (id) => {
     return users.find((user) => user.id === id);
